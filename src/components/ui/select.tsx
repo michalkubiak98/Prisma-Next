@@ -1,6 +1,6 @@
 // not from shadcn/ui, custom built from scratch to work without JS in the browser
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/src/lib/utils';
 import { forwardRef } from 'react';
 import { FiChevronDown } from 'react-icons/fi';
 
