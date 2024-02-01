@@ -4,7 +4,7 @@ import { Label } from './ui/label';
 import Select from './ui/select';
 import prisma from '@/src/lib/prisma';
 import { Button } from './ui/button';
-import { jobFilterSchema } from '@/src/lib/validation';
+import { JobFilterValues, jobFilterSchema } from '@/src/lib/validation';
 import { redirect } from 'next/navigation';
 
 async function filterJobs(formData: FormData) {
@@ -14,9 +14,7 @@ async function filterJobs(formData: FormData) {
   // console.log(formData.get("q") as string)
 
   const values = Object.fromEntries(formData.entries());
-
   const { q, type, location, remote } = jobFilterSchema.parse(values);
-
   const searchParams = new URLSearchParams({
     // syntax below passes the q trimmed if q exists etc etc.....
     ...(q && { q: q.trim() }),
@@ -24,16 +22,21 @@ async function filterJobs(formData: FormData) {
     ...(location && { location }),
     ...(remote && { remote: 'true' }),
   });
-
   // puts the '?q=dell&location=somewhere...' into the search bar for SEO and for filtering data
   redirect(`/?${searchParams.toString()}`);
 }
 
-export default async function JobFilterSidebar() {
-  interface JobLocation {
-    location: string;
-  }
+interface JobLocation {
+  location: string;
+}
 
+interface JobFilterSidebarProps {
+  defaultValues: JobFilterValues;
+}
+
+export default async function JobFilterSidebar({
+  defaultValues,
+}: JobFilterSidebarProps) {
   const locationsResult = await prisma.job.findMany({
     where: { approved: true },
     select: { location: true },
@@ -56,11 +59,20 @@ export default async function JobFilterSidebar() {
         <div className="space-y-4">
           <div className="flex flex-col gap-2">
             <Label htmlFor="q">Search</Label>
-            <Input id="q" name="q" placeholder="Search..." />
+            <Input
+              id="q"
+              name="q"
+              placeholder="Search..."
+              defaultValue={defaultValues.q}
+            />
           </div>
           <div className="flex flex-col gap-2">
             <Label htmlFor="type">Job Type</Label>
-            <Select id="type" name="type" defaultValue="">
+            <Select
+              id="type"
+              name="type"
+              defaultValue={defaultValues.type || ''}
+            >
               <option value="">All Jobs</option>
               {jobTypes.map((type) => (
                 <option key={type} value={type}>
@@ -71,7 +83,11 @@ export default async function JobFilterSidebar() {
           </div>
           <div className="flex flex-col gap-2">
             <Label htmlFor="location">Location</Label>
-            <Select id="location" name="location" defaultValue="">
+            <Select
+              id="location"
+              name="location"
+              defaultValue={defaultValues.location || ''}
+            >
               <option value="">All Locations</option>
               {distinctLocations.map((location) => (
                 <option key={location} value={location}>
@@ -86,6 +102,7 @@ export default async function JobFilterSidebar() {
               name="remote"
               type="checkbox"
               className="scale-125 accent-black ml-1"
+              defaultChecked={defaultValues.remote}
             />
             <Label htmlFor="location">Remote Jobs</Label>
           </div>

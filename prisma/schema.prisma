@@ -3,7 +3,7 @@
 
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["fullTextSearch"] // full text search in postgres to be able to search for jobs later
+  previewFeatures = ["fullTextSearch", "fullTextIndex"] // full text search in postgres to be able to search for jobs later
 }
 
 datasource db {
@@ -29,24 +29,11 @@ model Job {
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 
+  @@fulltext([title, companyName, type, locationType, location]) // whichever we want to fulltext search
   @@map("jobs")
 }
 
-// Instructions for schema changes and Prisma Client generation:
-// - Run `npx prisma db push` to apply schema changes to the database.
-// - Use `npx prisma generate` to update Prisma Client after schema modifications.
-
-//
-//
-//
-//
-//
-
-//datasource db {
-//  provider  = "postgresql"
-// url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
-//directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
-//}
+// relationships example
 
 // model Project {
 //   id        String   @id @default(cuid())
