@@ -21,7 +21,10 @@ export default function JobListItem({
   },
 }: JobListItemProps) {
   return (
-    <article className="flex flex-col gap-4 border rounded-lg p-5 m-5 hover:bg-slate-50 transition duration-150 ease-in-out">
+    <article
+      className="flex flex-col  gap-4 border rounded-lg p-5
+     hover:bg-slate-50 transition duration-150 ease-in-out"
+    >
       <div className="flex items-start justify-between">
         <h2 className="text-xl font-semibold">{title}</h2>
         <time className="flex items-center text-sm text-gray-500">

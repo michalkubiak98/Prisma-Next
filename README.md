@@ -1,6 +1,11 @@
 # Prisma Next Project Setup Documentation
 
-This README provides a comprehensive guide on setting up, running, and managing the Prisma Next project. It covers everything from cloning the repository to seeding the database and launching Prisma Studio for database management.
+This README provides a comprehensive guide on setting up, running, and managing the Prisma Next project. It covers everything from cloning the repository to seeding the database and launching Prisma Studio for database management. 
+
+#Based on the below tutorial:
+Learn Next.js 14 Server Actions With This One Project (UseFormStatus, UseFormState, Error Handling)
+
+https://www.youtube.com/watch?v=XD5FpbVpWzk&t=1440s
 
 ## Table of Contents
 
