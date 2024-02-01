@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"] // full text search in postgres to be able to search for jobs later
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Job {
+  id               Int      @id @default(autoincrement())
+  slug             String   @unique
+  title            String
+  type             String
+  locationType     String
+  location         String? // remote job dont require location
+  //description      String? // postgres
+  description      String?  @db.Text // Change for mysql, mysql has a default limit of 255
+  salary           Int
+  companyName      String
+  applicationEmail String?
+  applicationUrl   String?
+  companyLogoUrl   String?
+  approved         Boolean  @default(false) // admin must first approve this before job is posted
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@map("jobs")
+}
+
+// Instructions for schema changes and Prisma Client generation:
+// - Run `npx prisma db push` to apply schema changes to the database.
+// - Use `npx prisma generate` to update Prisma Client after schema modifications.
+
+//
+//
+//
+//
+//
+
+//datasource db {
+//  provider  = "postgresql"
+// url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+//directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+//}
+
+// model Project {
+//   id        String   @id @default(cuid())
+//   name      String
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+//   updates   Item[]
+// }
+
+// model Item {
+//   id          String @id @default(cuid())
+//   name        String
+//   description String
+//   Project     Project? @relation(fields: [projectId], references: [id])
+//   projectId   String?
+// }
