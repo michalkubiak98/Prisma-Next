@@ -1,36 +1,86 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Prisma Next Project Setup Documentation
+
+This README provides a comprehensive guide on setting up, running, and managing the Prisma Next project. It covers everything from cloning the repository to seeding the database and launching Prisma Studio for database management.
+
+## Table of Contents
+
+- [Prerequisites](#prerequisites)
+- [Getting Started](#getting-started)
+- [Database Setup](#database-setup)
+- [Initialize and Setup Prisma](#initialize-and-setup-prisma)
+- [Seed the Database](#seed-the-database)
+- [Launch Prisma Studio (Optional)](#launch-prisma-studio-optional)
+- [Running the Next.js Application](#running-the-nextjs-application)
+
+## Prerequisites
+
+Before you begin, make sure you have the following prerequisites:
+
+- Node.js and npm installed on your system.
+- Docker installed for running the MySQL database container.
 
 ## Getting Started
 
-First, run the development server:
+1. Clone the Prisma Next project repository:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+    ```bash
+    git clone https://github.com/your-username/Prisma-Next.git
+    cd Prisma-Next
+    ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install project dependencies:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+    ```bash
+    npm install
+    ```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Database Setup
 
-## Learn More
+1. Start a MySQL Docker container with a secure password. Replace `yourpassword` with your chosen password:
 
-To learn more about Next.js, take a look at the following resources:
+    ```bash
+    docker run --name mysql-container -e MYSQL_ROOT_PASSWORD=yourpassword -p 3306:3306 -d mysql:latest
+    ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. Ensure the `.env` file in the project root directory contains the correct database connection string:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+    ```env
+    DATABASE_URL="mysql://root:yourpassword@localhost:3306/mydb"
+    ```
 
-## Deploy on Vercel
+## Initialize and Setup Prisma
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Generate the Prisma client and push the schema to your database:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+    ```bash
+    npx prisma generate
+    npx prisma db push
+    ```
+
+## Seed the Database
+
+Populate your database with initial data using the seeding script:
+
+    ```bash
+    npm run seed
+    ```
+
+## Launch Prisma Studio (Optional)
+
+For database management and visualization, launch Prisma Studio:
+
+    ```bash
+    npx prisma studio
+    ```
+
+
+## Running the Next.js Application
+
+Start the development server to run your Next.js application:
+
+    ```bash
+    npm run dev
+    ```
+
+Your application will be available at http://localhost:3000.
+
