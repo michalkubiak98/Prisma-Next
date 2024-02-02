@@ -7,6 +7,10 @@ Learn Next.js 14 Server Actions With This One Project (UseFormStatus, UseFormSta
 
 https://www.youtube.com/watch?v=XD5FpbVpWzk&t=1440s
 
+
+Each branch is a stage of CRUD operations, the first branch search job prisma read' fully reads from a mysql db using prisma and server actions,
+so they can bee viewed at different stages of the crud app development, the next branch is 'create job prisma write' etc 
+
 ## Table of Contents
 
 - [Prerequisites](#prerequisites)

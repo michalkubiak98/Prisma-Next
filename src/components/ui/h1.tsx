@@ -5,7 +5,7 @@ export default function H1(props: React.HTMLProps<HTMLHeadingElement>) {
     <h1
       {...props}
       className={cn(
-        'text-4xl font-extrabold tracking-tight lg:text-5xl',
+        'text-4xl font-extrabold tracking-tight max-w-5xl text-center lg:text-5xl',
         props.className
       )}
     />
