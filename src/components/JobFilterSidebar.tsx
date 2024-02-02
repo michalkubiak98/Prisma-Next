@@ -53,10 +53,9 @@ export default async function JobFilterSidebar({
     <aside className="w-full md:w-[260px] sticky top-0 border border-gray-200 p-4">
       {/* We are utilizing the forms actions to pass in server actions, which will 
           automatically turn into a post endpoint. filterJobs sends a request to the server without javascript,
-          so the search or filter for example will work even when the user has slow internet (like a plane) or disabled js
-     */}
-
-      <form action={filterJobs}>
+          so the search or filter for example will work even when the user has slow internet (like a plane) or disabled js*/}
+      {/* form is rendered from scratch (key) when any string in the default values changes, like hitting home button */}
+      <form action={filterJobs} key={JSON.stringify(defaultValues)}>
         <div className="space-y-4">
           <div className="flex flex-col gap-2">
             <Label htmlFor="q">Search</Label>
