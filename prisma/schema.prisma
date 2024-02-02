@@ -24,7 +24,6 @@ model Job {
   companyName      String
   applicationEmail String?
   applicationUrl   String?
-  companyLogoUrl   String?
   approved         Boolean  @default(false) // admin must first approve this before job is posted
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
