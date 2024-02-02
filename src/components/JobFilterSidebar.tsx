@@ -6,6 +6,7 @@ import prisma from '@/src/lib/prisma';
 import { Button } from './ui/button';
 import { JobFilterValues, jobFilterSchema } from '@/src/lib/validation';
 import { redirect } from 'next/navigation';
+import FormSubmitButton from './FormSubmitButton';
 
 async function filterJobs(formData: FormData) {
   'use server';
@@ -107,9 +108,8 @@ export default async function JobFilterSidebar({
             <Label htmlFor="location">Remote Jobs</Label>
           </div>
           {/* When the submit button is clicked it triggers our server action 'filterJobs' */}
-          <Button type="submit" className="w-full">
-            Filter Jobs
-          </Button>
+          {/* This button is now extracted into a client component which will have access to form state and will let this component remain a server compoenent*/}
+          <FormSubmitButton className="w-full">Filter Jobs</FormSubmitButton>
         </div>
       </form>
     </aside>
