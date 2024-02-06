@@ -22,6 +22,7 @@ model Job {
   description      String?  @db.Text // Change for mysql, mysql has a default limit of 255
   salary           Int
   companyName      String
+  //companyLogoUrl      String?
   applicationEmail String?
   applicationUrl   String?
   approved         Boolean  @default(false) // admin must first approve this before job is posted
