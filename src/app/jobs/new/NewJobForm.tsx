@@ -23,6 +23,7 @@ import config from '../../../../tailwind.config';
 import RichTextEditor from '@/src/components/RichTextEditor';
 import { draftToMarkdown } from 'markdown-draft-js';
 import LoadingButton from '@/src/components/LoadingButton';
+import { createJobPosting } from './actions';
 
 export default function NewJobForm() {
   // define type of data we expect in the form
@@ -43,8 +44,30 @@ export default function NewJobForm() {
   } = form;
 
   async function onSubmit(values: CreateJobValues) {
-    alert(JSON.stringify(values, null, 2));
-    // later create a server action to create a new job
+    //alert(JSON.stringify(values, null, 2));
+
+    const formData = new FormData();
+
+    Object.entries(values).forEach(([key, value]) => {
+      if (value) {
+        //strings or file value for company logo image
+        formData.append(key, value);
+      }
+    });
+
+    try {
+      // ******* CREATE A JOB POSTING AND PUSH TO DB *******
+      await createJobPosting(formData);
+
+      // we cannot forward the direct error message from the backend (post for creating job listing) as it could
+      // potentially leak sensitive information to the frontend, so we have to return an error string on the server action instead if we
+      // want the user to see an error message. in Production nextjs removes the error object from catch block
+    } catch (error) {
+      // if db is down for example or any other error the use will get the below alert
+      // instead of redirect to error page and losing all the input values like a long description
+
+      alert('Error submitting form');
+    }
   }
 
   return (
@@ -264,7 +287,8 @@ export default function NewJobForm() {
                 />
               </div>
             </div>
-            <FormField
+            {/* 
+             <FormField
               control={control}
               name="description"
               render={({ field }) => (
@@ -280,6 +304,20 @@ export default function NewJobForm() {
                       ref={field.ref}
                     />
                   </FormControl>
+                </FormItem>
+              )}
+            />
+            */}
+            <FormField
+              control={control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Description</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />

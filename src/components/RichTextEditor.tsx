@@ -1,8 +1,15 @@
 'use client';
 
+
+// COULD NOT GET THIS TO WORK
+
 import { forwardRef } from 'react';
 import { EditorProps } from 'react-draft-wysiwyg';
 import dynamic from 'next/dynamic';
+
+import { convertToRaw } from 'draft-js';
+
+
 const Editor = dynamic(
   () => import('react-draft-wysiwyg').then((mod) => mod.Editor),
   { ssr: false }
